@@ -45,6 +45,8 @@ if (${cuda_str_pos} GREATER -1)
   set(CUDA_BUILD TRUE)
 endif ()
 
+FIND_PACKAGE (Boost REQUIRED)
+
 # Compute reasonable defaults. This needs to happen before the CACHE variables
 # are set.
 STRING(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_ci)
@@ -121,7 +123,7 @@ include(SetCompilerFlags)
 set (SCREAM_LINK_FLAGS ${KOKKOS_LDFLAGS_STR})
 set (SCREAM_INCLUDE_DIRS ${SCREAM_SRC_DIR} ${CMAKE_BINARY_DIR}/src)
 
-set (SCREAM_TPL_INCLUDE_DIRS ${Kokkos_INCLUDE_DIR})
+set (SCREAM_TPL_INCLUDE_DIRS ${Kokkos_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
 set (SCREAM_TPL_LIBRARY_DIRS ${Kokkos_LIBRARY_DIR})
 set (SCREAM_TPL_LIBRARIES ${KOKKOS_LIBS})
 

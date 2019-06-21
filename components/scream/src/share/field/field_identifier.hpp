@@ -2,6 +2,7 @@
 #define SCREAM_FIELD_IDENTIFIER_HPP
 
 #include "share/field/field_layout.hpp"
+#include "share/field/field_units.hpp"
 
 #include <string>
 #include <vector>
@@ -42,6 +43,7 @@ public:
 
   // Name and layout informations
   const std::string&  name          () const { return m_name;      }
+  const std::string&  units         () const { return m_units;    }
   const layout_type&  get_layout    () const { return m_layout;    }
   const std::string&  get_grid_name () const { return m_grid_name; }
 
@@ -50,10 +52,15 @@ public:
 
   // ----- Setters ----- //
 
-  // Note: as soon as a dimension is set, it cannot be changed.
+  // Note: as soon as these properties are set, they cannot be changed
   void set_dimension  (const int idim, const int dimension);
   void set_dimensions (const std::vector<int>& dims);
   void set_grid_name  (const std::string& grid_name);
+
+  template<typename Units>
+  void set_units ();
+  template<typename Units>
+  void set_units (const Units&);
 
   // We reimplement the equality operator for identifiers comparison (needed for some std container)
   friend bool operator== (const FieldIdentifier&, const FieldIdentifier&);
@@ -68,14 +75,33 @@ protected:
   layout_type     m_layout;
 
   std::string     m_grid_name;
+  std::string     m_units;
 
   // The identifier string is a conveniet way to display the information of
   // the identifier, so that it can be easily read.
   std::string     m_identifier;
+
+  static const char* s_invalid_string;
 };
 
 bool operator== (const FieldIdentifier& fid1, const FieldIdentifier& fid2);
 inline bool operator!= (const FieldIdentifier& fid1, const FieldIdentifier& fid2) { return !(fid1==fid2); }
+
+// =================================== IMPLEMENTATION ================================= //
+
+template<typename Units>
+void FieldIdentifier::set_units() {
+  scream_require_msg(m_units==s_invalid_string,"Error! You cannot reset the units once they are set.\n");
+
+  m_units = units::get_units<Units>();
+}
+
+template<typename Units>
+void FieldIdentifier::set_units(const Units& u) {
+  scream_require_msg(m_units==s_invalid_string,"Error! You cannot reset the units once they are set.\n");
+
+  m_units = units::get_units(u);
+}
 
 } // namespace scream
 

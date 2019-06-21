@@ -32,6 +32,20 @@ TEST_CASE("field_identifier", "") {
   REQUIRE (fid1!=fid2);
 }
 
+TEST_CASE("field_units", "") {
+  using namespace scream;
+  using namespace units;
+
+  FieldIdentifier fid ("f",{FieldTag::Column},{1});
+
+  fid.set_units(one*1e3*N*m);
+
+  REQUIRE (fid.units()==get_units(units::kJ));
+  REQUIRE (fid.units()==get_units(units::MJ/1e3));
+  REQUIRE (fid.units()!=get_units(units::J));
+  REQUIRE_THROWS(fid.set_units(kJ)); // Cannot reset units (even if they are the same)
+}
+
 TEST_CASE("field", "") {
   using namespace scream;
   using namespace scream::pack;

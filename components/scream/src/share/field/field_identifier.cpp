@@ -10,6 +10,7 @@ FieldIdentifier (const std::string& name,
                  const std::string& grid_name)
  : m_name   (name)
  , m_layout (layout)
+ , m_units  (s_invalid_string)
 {
   // This also calls 'update_identifier'
   set_grid_name(grid_name);
@@ -21,6 +22,7 @@ FieldIdentifier (const std::string& name,
                  const std::string& grid_name)
  : m_name   (name)
  , m_layout (tags)
+ , m_units  (s_invalid_string)
 {
   // This also calls 'update_identifier'
   set_grid_name(grid_name);
@@ -32,6 +34,7 @@ FieldIdentifier (const std::string& name,
                  const std::string& grid_name)
  : m_name   (name)
  , m_layout (tags)
+ , m_units  (s_invalid_string)
 {
   // This also calls 'update_identifier'
   set_grid_name(grid_name);
@@ -80,5 +83,7 @@ bool operator< (const FieldIdentifier& fid1, const FieldIdentifier& fid2) {
   // Simply compare the identifiers
   return (fid1.get_identifier()<fid2.get_identifier());
 }
+
+const char* FieldIdentifier::s_invalid_string = "_INVALID_";
 
 } // namespace scream
