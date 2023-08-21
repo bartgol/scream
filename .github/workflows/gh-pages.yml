@@ -18,7 +18,7 @@ jobs:
       - name: Show action trigger
         run: echo "= The job was automatically triggered by a ${{github.event_name}} event."
       - name: Generate eamxx params docs
-        run: eamxx-params-docs-autogen
+        run: ./eamxx-params-docs-autogen
         working-directory: components/eamxx/scripts
       - name: Install python deps
         run: python3 -m pip install mkdocs pymdown-extensions mkdocs-material
