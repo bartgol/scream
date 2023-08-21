@@ -24,6 +24,9 @@ concurrency:
 jobs:
   Build-and-Deploy-docs:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./components/eamxx/docs/mkdocs
     steps:
       - run: echo "= The job was automatically triggered by a ${{github.event_name}} event."
       - run: pip install mkdocs pymdown-extensions mkdocs-material
