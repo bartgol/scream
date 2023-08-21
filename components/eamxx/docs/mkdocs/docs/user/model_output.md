@@ -3,6 +3,8 @@ Model output
 
 HELLO WORLD!
 
+CIAO MONDO!
+
 EAMxx allows to configure the desired model output via [YAML](https://yaml.org/) files,
 with each YAML file associated to a different output file.
 
