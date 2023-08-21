@@ -1,6 +1,8 @@
 Model output
 =====================================
 
+HELLO WORLD!
+
 EAMxx allows to configure the desired model output via [YAML](https://yaml.org/) files,
 with each YAML file associated to a different output file.
 
