@@ -15,6 +15,7 @@ jobs:
           repository: bartgol/scream
           ref: master
           fetch-depth: 0 # Needed, or else gh-pages won't be fetched, and push rejected
+          submodules: recursive
       - name: Show action trigger
         run: echo "= The job was automatically triggered by a ${{github.event_name}} event."
       - name: Generate eamxx params docs
