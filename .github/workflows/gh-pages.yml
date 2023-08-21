@@ -19,5 +19,5 @@ jobs:
       - name: Install python deps
         run: pip install mkdocs pymdown-extensions mkdocs-material
       - name: Build and deploy docs
-        working_directory: components/eamxx/docs/mkdocs
+        working-directory: components/eamxx/docs/mkdocs
         run: mkdocs build && mkdocs gh-deploy
