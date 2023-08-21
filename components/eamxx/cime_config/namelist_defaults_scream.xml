@@ -188,6 +188,7 @@ be lost if SCREAM_HACK_XML is not enabled.
 
     <!-- P3 microphysics -->
     <p3 inherit="atm_proc_base">
+      <blah type="string">i made this up</blah>
       <do_prescribed_ccn>true</do_prescribed_ccn>
       <do_prescribed_ccn COMPSET=".*SCREAM.*noAero">false</do_prescribed_ccn>
       <do_predict_nc>true</do_predict_nc>
