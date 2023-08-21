@@ -26,6 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "= The job was automatically triggered by a ${{github.event_name}} event."
+      - run: pip install mkdocs pymkdownx pymdown-extensions mkdocs-material
+      - run: mkdocs build
+      - run: mkdocs gh-deploy
   # Single deploy job since we're just deploying
   #deploy:
   #  environment:
