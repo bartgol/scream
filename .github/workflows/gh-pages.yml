@@ -1,6 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
 name: Build and deploy mkdocs
-description: Runs mkdocs on master branch, to build and then deploy to github.io the documentation
 
 on:
   # Runs on pushes targeting the default branch
