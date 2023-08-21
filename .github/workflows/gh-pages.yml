@@ -28,13 +28,15 @@ jobs:
 #      run:
 #        working-directory: ./components/eamxx/docs/mkdocs
     steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: bartgol/scream
+          ref: master
       - run: echo "= The job was automatically triggered by a ${{github.event_name}} event."
-      - run: git clone git@github.com:bartgol/scream
-      - run: |
-          cd scream
-          pwd
-          ls -la
-          pip install mkdocs pymdown-extensions mkdocs-material
+      - name: Install python deps
+        run: pip install mkdocs pymdown-extensions mkdocs-material
+      - name: Build and deploy docs
+        run: |
           cd components/eamxx/docs/mkdocs
           ls -la
           mkdocs build
