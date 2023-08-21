@@ -35,7 +35,8 @@ jobs:
           pwd
           ls -la
           pip install mkdocs pymdown-extensions mkdocs-material
-          cd components/eamxx
+          cd components/eamxx/docs/mkdocs
+          ls -la
           mkdocs build
           mkdocs gh-deploy
   # Single deploy job since we're just deploying
