@@ -29,11 +29,15 @@ jobs:
 #        working-directory: ./components/eamxx/docs/mkdocs
     steps:
       - run: echo "= The job was automatically triggered by a ${{github.event_name}} event."
-      - run: pwd
-      - run: ls -la
-      - run: pip install mkdocs pymdown-extensions mkdocs-material
-      - run: mkdocs build
-      - run: mkdocs gh-deploy
+      - run: git clone https://github.com/bartgol/scream
+      - run: |
+          cd scream
+          pwd
+          ls -la
+          pip install mkdocs pymdown-extensions mkdocs-material
+          cd components/eamxx
+          mkdocs build
+          mkdocs gh-deploy
   # Single deploy job since we're just deploying
   #deploy:
   #  environment:
