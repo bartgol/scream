@@ -24,14 +24,12 @@ concurrency:
 jobs:
   Build-and-Deploy-docs:
     runs-on: ubuntu-latest
-    with:
-      repo: bartgol/scream
 #    defaults:
 #      run:
 #        working-directory: ./components/eamxx/docs/mkdocs
     steps:
       - run: echo "= The job was automatically triggered by a ${{github.event_name}} event."
-      - run: git clone https://github.com/bartgol/scream
+      - run: git clone git@github.com:bartgol/scream
       - run: |
           cd scream
           pwd
