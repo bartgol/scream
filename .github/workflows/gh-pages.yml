@@ -24,9 +24,6 @@ concurrency:
 jobs:
   Build-and-Deploy-docs:
     runs-on: ubuntu-latest
-#    defaults:
-#      run:
-#        working-directory: ./components/eamxx/docs/mkdocs
     steps:
       - uses: actions/checkout@v3
         with:
