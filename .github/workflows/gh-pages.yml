@@ -24,6 +24,8 @@ concurrency:
 jobs:
   Build-and-Deploy-docs:
     runs-on: ubuntu-latest
+    with:
+      repo: bartgol/scream
 #    defaults:
 #      run:
 #        working-directory: ./components/eamxx/docs/mkdocs
