@@ -56,6 +56,6 @@ jobs:
       - if:  ${{ github.event_name == 'pull_request' }}
         name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
-        working_directory: components/eamxx
+        working-directory: components/eamxx
         with:
           source-dir: ./site
