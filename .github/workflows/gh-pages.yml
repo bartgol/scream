@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Needed, or else gh-pages won't be fetched, and push rejected
-          submodules: recursive
+          submodules: true
   
       - name: Show action trigger
         run: |
