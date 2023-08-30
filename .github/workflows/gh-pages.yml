@@ -56,7 +56,7 @@ jobs:
 
       # If it's a PR, deploy to a preview page
       - if: ${{ github.event_name == 'pull_request' }}
-        name: preview-gh-pages
+        name: Preview docs
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: components/eamxx/site/
