@@ -47,27 +47,21 @@ jobs:
         run: |
           mkdocs build --strict --verbose
 
-      # only deploy when there is a push to master
-      - if: ${{ github.event_name == 'push' }}
-        name: Deploy docs
-        working-directory: components/eamxx
-        run: |
-          mkdocs gh-deploy --verbose
-      # If it's a PR, deploy to a preview page
-      - if: ${{ github.event_name == 'pull_request' }}
-        uses: rossjrw/pr-preview-action@v1
-        with:
-          source-dir: components/eamxx/site/
-  # deploy-preview:
-  #   if: ${{ github.event_name == 'pull_request' }}
-  #   runs-on: ubuntu-20.04
-  #   needs: eamxx-docs
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - run: |
-  #         npm install
-  #         npm run build
-  #     - uses: rossjrw/pr-preview-action@v1
-  #       with:
-  #         source-dir: components/eamxx/site/
+  deploy-docs:
+    runs-on: ubuntu-latest
+    needs: eamxx-docs
+    # only deploy when there is a push to master
+    if: ${{ github.event_name == 'push' }}
+    working-directory: components/eamxx
+    run: |
+        mkdocs gh-deploy --verbose
+
+  preview-docs:
+    runs-on: ubuntu-latest
+    needs: eamxx-docs
+    # If it's a PR, deploy to a preview page
+    if: ${{ github.event_name == 'pull_request' }}
+    uses: rossjrw/pr-preview-action@v1
+    with:
+      source-dir: components/eamxx/site/
 
