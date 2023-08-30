@@ -14,7 +14,7 @@ on:
 
 jobs:
 
-  emaxx-docs:
+  eamxx-docs:
     runs-on: ubuntu-latest
 
     steps:
