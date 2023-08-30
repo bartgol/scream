@@ -53,9 +53,18 @@ jobs:
         working-directory: components/eamxx
         run: |
           mkdocs gh-deploy --verbose
-      - if:  ${{ github.event_name == 'pull_request' }}
-        name: Deploy preview
+  deploy-preview:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-20.04
+    needs: eamxx-docs
+    steps:
+      - name: install-build
+        run: |
+          npm install
+          npm run build
+      - name: preview
         uses: rossjrw/pr-preview-action@v1
         working-directory: components/eamxx
         with:
-          source-dir: ./site
+          source-dir: ./site/
+
