@@ -53,3 +53,10 @@ jobs:
         working-directory: components/eamxx
         run: |
           mkdocs gh-deploy --verbose
+  preview-docs:
+    runs-on: ubunti-latest
+    needs: eamxx-docs
+    steps:
+      - uses: readthedocs/actions/preview@v1
+        with:
+          project-slug: "eamxx-docs-preview"
