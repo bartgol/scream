@@ -64,7 +64,6 @@ jobs:
           npm run build
       - name: preview
         uses: rossjrw/pr-preview-action@v1
-        working-directory: components/eamxx
         with:
-          source-dir: ./site/
+          source-dir: components/eamxx/site/
 
