@@ -58,12 +58,11 @@ jobs:
     runs-on: ubuntu-20.04
     needs: eamxx-docs
     steps:
-      - name: install-build
-        run: |
+      - uses: actions/checkout@v3
+      - run: |
           npm install
           npm run build
-      - name: preview
-        uses: rossjrw/pr-preview-action@v1
+      - uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: components/eamxx/site/
 
