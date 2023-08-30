@@ -53,10 +53,9 @@ jobs:
         working-directory: components/eamxx
         run: |
           mkdocs gh-deploy --verbose
-  preview-docs:
-    runs-on: ubuntu-latest
-    needs: eamxx-docs
-    steps:
-      - uses: readthedocs/actions/preview@v1
+      - if:  ${{ github.event_name == 'pull_request' }}
+        name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
+        working_directory: components/eamxx
         with:
-          project-slug: "eamxx-docs-preview"
+          source-dir: ./site
