@@ -50,21 +50,17 @@ jobs:
   deploy-docs:
     runs-on: ubuntu-latest
     needs: eamxx-docs
-    # only deploy when there is a push to master
-    if: ${{ github.event_name == 'push' }}
     steps:
-      - name: deploy-gh-pages
+      # only deploy to main github page when there is a push to master
+      - if: ${{ github.event_name == 'push' }}
+        name: deploy-gh-pages
         working-directory: components/eamxx
         run: |
           mkdocs gh-deploy --verbose
 
-  preview-docs:
-    runs-on: ubuntu-latest
-    needs: eamxx-docs
-    # If it's a PR, deploy to a preview page
-    if: ${{ github.event_name == 'pull_request' }}
-    steps:
-      - name: preview-gh-pages
+      # If it's a PR, deploy to a preview page
+      - if: ${{ github.event_name == 'pull_request' }}
+        name: preview-gh-pages
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: components/eamxx/site/
