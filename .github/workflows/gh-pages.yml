@@ -47,27 +47,9 @@ jobs:
         run: |
           mkdocs build --strict --verbose
 
-      - name: Store site docs
-        uses: actions/upload-artifact@v3
-        with:
-          if-no-files-found: error
-          name: docs-pages
-          path: components/eamxx/site
-          retention-days: 1
-
-  deploy-docs:
-    runs-on: ubuntu-latest
-    needs: eamxx-docs
-    steps:
-      # Retrieve pages built by previous job
-      - name: Retrieve site docs
-        uses: actions/download-artifact@v3
-        with:
-          name: docs-pages
-          path: components/eamxx/site
       # only deploy to main github page when there is a push to master
       - if: ${{ github.event_name == 'push' }}
-        name: deploy-gh-pages
+        name: Deploy docs
         working-directory: components/eamxx
         run: |
           mkdocs gh-deploy --verbose
