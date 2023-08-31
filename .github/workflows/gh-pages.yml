@@ -13,6 +13,9 @@ on:
 
   workflow_dispatch:
 
+concurrency:
+  group: eamxx-docs-action
+
 jobs:
 
   eamxx-docs:
