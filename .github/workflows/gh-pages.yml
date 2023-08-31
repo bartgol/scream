@@ -62,6 +62,7 @@ jobs:
           # information about GITHUB_TOKEN are in settings
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./components/eamxx/site
+          keep_files: true
 
       # If it's a PR, deploy to a preview page
       - if: ${{ github.event_name == 'pull_request' }}
