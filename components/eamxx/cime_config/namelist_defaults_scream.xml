@@ -32,7 +32,6 @@ be lost if SCREAM_HACK_XML is not enabled.
       <partmethod nlev="72">420</partmethod>
 
     Selector info will not be duplicated in the processed $case/namelist_scream.xml file.
-        some comments
   -->
   <selectors>
     <selector name="hgrid" case_env="ATM_GRID"/>
