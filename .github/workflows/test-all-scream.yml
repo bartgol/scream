@@ -18,7 +18,7 @@ concurrency:
 jobs:
 
   tas-mappy:
-    runs-on: luca-ws-runner
+    runs-on: [self-hosted, luca-ws-runner]
 
     steps:
       - name: Show action trigger
