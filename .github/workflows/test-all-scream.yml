@@ -11,6 +11,10 @@ on:
 
   workflow_dispatch:
 
+concurrency:
+  # Prevent 2+ copies of this workflow from running concurrently for each PR
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 jobs:
 
   tas-mappy:
@@ -25,7 +29,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: recursive
-
+          path: ./${{github.run_number}
       - name: Run gather-all-data
         working-directory: components/eamxx
         run: |
