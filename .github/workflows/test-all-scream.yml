@@ -1,0 +1,32 @@
+# This workflow aims to automatically rebuild eamxx documentation
+# every time the master branch is updated on github and within every PR
+
+name: test-all-scream
+
+on:
+  # Runs every time a PR is open against master
+  pull_request:
+    branches: [ master ]
+    type: [opened, syncronize, reopened]
+
+  workflow_dispatch:
+
+jobs:
+
+  tas-mappy:
+    runs-on: luca-ws-runner
+
+    steps:
+      - name: Show action trigger
+        run: |
+          echo "= The job was automatically triggered by a ${{github.event_name}} event."
+
+      - name: Check out the repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Run gather-all-data
+        working-directory: components/eamxx
+        run: |
+          echo whoami
