@@ -34,4 +34,4 @@ jobs:
       - name: Run gather-all-data
         working-directory: components/eamxx
         run: |
-          scripts/gather-all-data "./scripts/test-all-scream -i -p -m \$machine -c EKAT_DISABLE_TPL_WARNINGS=ON " -l -m mappy
+          scripts/gather-all-data "module purge && source /projects/sems/modulefiles/utils/sems-archive-modules-init.sh && ./scripts/test-all-scream -i -p -m \$machine -c EKAT_DISABLE_TPL_WARNINGS=ON " -l -m mappy
