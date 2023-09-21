@@ -33,4 +33,4 @@ jobs:
       - name: Run gather-all-data
         working-directory: components/eamxx
         run: |
-          echo whoami
+          echo $(whoami)
