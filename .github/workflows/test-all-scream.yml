@@ -33,4 +33,4 @@ jobs:
       - name: Run gather-all-data
         working-directory: components/eamxx
         run: |
-          echo $(whoami)
+          scripts/gather-all-data "./scripts/test-all-scream -i -p -m \$machine -c EKAT_DISABLE_TPL_WARNINGS=ON " -l -m mappy
