@@ -28,8 +28,9 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
         with:
-          submodules: recursive
+          submodules: false
           path: ./${{github.run_number}}
+          sparse-checkout: components/eamxx/scripts
       - name: Run gather-all-data
         working-directory: components/eamxx
         run: |
