@@ -6,7 +6,7 @@
 #include "share/field/field_layout.hpp"
 #include "share/field/field.hpp"
 
-#include "ekat/mpi//ekat_comm.hpp"
+#include "ekat/mpi/ekat_comm.hpp"
 
 #include <map>
 #include <list>
@@ -82,6 +82,7 @@ public:
                                             const std::vector<FieldTag>& cmp_tags,
                                             const std::vector<int>& cmp_dims) const = 0;
 
+  FieldLayout get_global_layout (const FieldLayout& local) const;
   int get_num_vertical_levels () const { return m_num_vert_levs; }
 
   // Whether this grid contains unique dof GIDs
