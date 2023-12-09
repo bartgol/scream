@@ -209,12 +209,6 @@ bool has_attribute (const std::string& filename, const std::string& attname)
 bool has_attribute (const std::string& filename, const std::string& varname, const std::string& attname)
 {
   int ncid, varid, attid, err;
-
-  bool was_open = is_file_open_c2f(filename.c_str(),-1);
-  if (not was_open) {
-    register_file(filename,Read);
-  }
-
   // Get file id
   ncid = get_file_ncid_c2f (filename.c_str());
 
@@ -248,6 +242,83 @@ bool has_attribute (const std::string& filename, const std::string& varname, con
 
   return true;
 }
+
+bool has_variable (const std::string& filename, const std::string& varname,
+                   const std::vector<std::string>& dim_names,
+                   const std::vector<int>& dim_extents)
+{
+  int ncid, varid, err;
+
+  bool was_open = is_file_open_c2f(filename.c_str(),-1);
+  if (not was_open) {
+    register_file(filename,Read);
+  }
+
+  auto close_file = [&]() {
+    if (not was_open) {
+      eam_pio_closefile(filename);
+    }
+  };
+
+  ncid = get_file_ncid_c2f (filename.c_str());
+  err = PIOc_inq_varid(ncid,varname.c_str(),&varid);
+  if (err==PIO_ENOTVAR) {
+    close_file();
+    return false;
+  }
+
+  EKAT_REQUIRE_MSG (err==PIO_NOERR,
+      "Error! Something went wrong while retrieving variable id.\n"
+      " - filename : " + filename + "\n"
+      " - varname  : " + varname + "\n"
+      " - pio error: " + std::to_string(err) + "\n");
+
+  // Now retrieve dims of the var
+  int ndims;
+  err = PIOc_inq_varndims(ncid,varid,&ndims);
+  EKAT_REQUIRE_MSG (err==PIO_NOERR,
+      "Error! Something went wrong while retrieving variable ndims.\n"
+      " - filename : " + filename + "\n"
+      " - varname  : " + varname + "\n"
+      " - pio error: " + std::to_string(err) + "\n");
+
+  std::vector<int> dimids(ndims);
+  err = PIOc_inq_vardimid(ncid,varid,dimids.data());
+  EKAT_REQUIRE_MSG (err==PIO_NOERR,
+      "Error! Something went wrong while retrieving variable dims ids.\n"
+      " - filename : " + filename + "\n"
+      " - varname  : " + varname + "\n"
+      " - pio error: " + std::to_string(err) + "\n");
+  char name[PIO_MAX_NAME];
+  PIO_Offset len;
+  size_t non_time_dims = 0;
+  for (int idim=0; idim<ndims; ++idim) {
+    err = PIOc_inq_dim(ncid,dimids[idim],name,&len);
+    EKAT_REQUIRE_MSG (err==PIO_NOERR,
+        "Error! Something went wrong while retrieving dimension specs.\n"
+        " - filename : " + filename + "\n"
+        " - dim id   : " + std::to_string(dimids[idim]) + "\n"
+        " - pio error: " + std::to_string(err) + "\n");
+
+    std::string name_str = name;
+    if (name_str=="time") {
+      // Ignore unlimited dim, we only want to check the "physical" layout
+      continue;
+    }
+
+    if (name_str!=dim_names[non_time_dims] or len!=dim_extents[non_time_dims]) {
+      close_file();
+      return false;
+    }
+    ++non_time_dims;
+  }
+
+  close_file ();
+
+  // Protect against special 1d layout (time)
+  return non_time_dims==dim_names.size();
+}
+
 /* ----------------------------------------------------------------- */
 void set_dof(const std::string& filename, const std::string& varname, const Int dof_len, const std::int64_t* x_dof) {
 

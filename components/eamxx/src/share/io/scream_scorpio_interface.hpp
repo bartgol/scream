@@ -38,6 +38,9 @@ namespace scorpio {
   int get_dimlen(const std::string& filename, const std::string& dimname);
   bool has_dim(const std::string& filename, const std::string& dimname);
   bool has_variable (const std::string& filename, const std::string& varname);
+  bool has_variable (const std::string& filename, const std::string& varname,
+                     const std::vector<std::string>& dim_names,
+                     const std::vector<int>& dim_extents);
   bool has_attribute (const std::string& filename, const std::string& attname);
   bool has_attribute (const std::string& filename, const std::string& varname, const std::string& attname);
   void set_decomp(const std::string& filename);
