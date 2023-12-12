@@ -1059,6 +1059,7 @@ void AtmosphereDriver::set_initial_conditions ()
       for (const auto& it : topo_fnames_file) {
         const auto& gname = it.first;
         auto fm = get_field_mgr(gname);
+        iop->setup_io_info(filename, m_grids_manager->get_grid(gname));
         iop->read_fields_from_file_for_iop(filename,
                                            topo_fnames_file[gname],
                                            topo_fnames_eamxx[gname],
