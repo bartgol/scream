@@ -145,6 +145,11 @@ public:
   virtual void set_required_group (const FieldGroup& group);
   virtual void set_computed_group (const FieldGroup& group);
 
+  // Signal to the atm proc that we're done setting fields in it.
+  // Derived classes *can* use this info to start setting up some
+  // infrastructure. Default behavior is a no-op
+  virtual void all_fields_set () {}
+
   // These methods check that some properties are satisfied before/after
   // the run_impl method is called.
   // For more info on what a property check can be, see content of the
