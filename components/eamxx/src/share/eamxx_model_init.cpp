@@ -68,14 +68,16 @@ set_constant_fields (const std::vector<std::string>& fnames,
       auto tail = fnames[i].substr(pos+5);
       EKAT_REQUIRE_MSG (tail.size()>0,
           "Error! Bad name specification for constant field initialization.\n"
-          " - input name: " + fnames[i] + "\n");
+          " - input name: " + fnames[i] + "\n"
+          "The presence of '_cmp_' suggests this is a vector field, but no index was found after '_cmp'\n");
       try {
         int cmp = std::stoi (tail);
         init_constant_field(fnames[i],fvalues[i],cmp);
       } catch (std::exception&) {
         EKAT_ERROR_MSG (
           "Error! Bad name specification for constant field initialization.\n"
-          " - input name: " + fnames[i] + "\n");
+          " - input name: " + fnames[i] + "\n"
+          "The presence of '_cmp_' suggests this is a vector field, but '" + tail + "' could not be parsed as an index\n");
       }
     }
   }
