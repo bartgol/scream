@@ -148,7 +148,8 @@ public:
   // Signal to the atm proc that we're done setting fields in it.
   // Derived classes *can* use this info to start setting up some
   // infrastructure. Default behavior is a no-op
-  virtual void all_fields_set () {}
+  void all_fields_set ();
+  virtual void all_fields_set_impl () {}
 
   // These methods check that some properties are satisfied before/after
   // the run_impl method is called.

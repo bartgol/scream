@@ -570,7 +570,7 @@ endloop:
 }
 
 void AtmosphereProcessGroup::
-all_fields_set ()
+all_fields_set_impl ()
 {
   for (auto atm_proc : m_atm_processes) {
     atm_proc->all_fields_set();

@@ -253,7 +253,7 @@ void HommeDynamics::set_grids (const std::shared_ptr<const GridsManager> grids_m
   m_ic_remapper = grids_manager->create_remapper(m_cgll_grid,m_dyn_grid);
 }
 
-void HommeDynamics::all_fields_set ()
+void HommeDynamics::all_fields_set_impl ()
 {
   const auto& dgn = m_dyn_grid->name();
   const auto& pgn = m_phys_grid->name();

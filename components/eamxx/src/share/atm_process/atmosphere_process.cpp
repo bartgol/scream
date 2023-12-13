@@ -69,7 +69,6 @@ void AtmosphereProcess::initialize (const TimeStamp& t0, const RunType run_type)
   if (this->type()!=AtmosphereProcessType::Group) {
     start_timer (m_timer_prefix + this->name() + "::init");
   }
-  set_fields_and_groups_pointers();
   m_time_stamp = t0;
   initialize_impl(run_type);
 
@@ -359,6 +358,12 @@ void AtmosphereProcess::set_computed_group (const FieldGroup& group) {
   }
 
   set_computed_group_impl(group);
+}
+
+void AtmosphereProcess::all_fields_set ()
+{
+  set_fields_and_groups_pointers();
+  all_fields_set_impl();
 }
 
 void AtmosphereProcess::run_property_check (const prop_check_ptr&       property_check,
