@@ -97,7 +97,7 @@ separate_inputs (const std::vector<Field>& eamxx_inputs)
       // Also, keep track of the field name in the topo file vs eamxx
       m_topo_fields.push_back(f);
       if (fid.name()=="phis") {
-        m_topo_fields_names_file[gname].push_back("phis");
+        m_topo_fields_names_eamxx[gname].push_back("phis");
         if (gname=="Physics PG2") {
           m_topo_fields_names_file[gname].push_back("PHIS");
         } else {
