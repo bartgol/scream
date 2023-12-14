@@ -38,6 +38,8 @@ public:
   void remap_dyn_to_fv_phys (const view_ND<Real,2>& T_out, const view_ND<Real,3>& uv_out, const view_ND<Real,3>& Q_out) const;
   void remap_fv_phys_to_dyn () const;
 
+  void clean_up ();
+
   bool fv_phys_active = false;
   int  pgN            = -1;
 private:

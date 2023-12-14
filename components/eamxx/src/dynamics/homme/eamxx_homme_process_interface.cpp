@@ -75,6 +75,7 @@ HommeDynamics::~HommeDynamics ()
 {
   // This class is done with Homme. Remove from its users list
   HommeContextUser::singleton().remove_user();
+  HommeFvPhysHelper::instance().clean_up();
 }
 
 void HommeDynamics::set_grids (const std::shared_ptr<const GridsManager> grids_manager)

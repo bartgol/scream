@@ -218,4 +218,22 @@ copy_prev (const int ncols, const int nlevs,
   Kokkos::fence();
 }
 
+void HommeFvPhysHelper::
+clean_up ()
+{
+  m_phys_grid = m_cgll_grid = m_dyn_grid = nullptr;
+
+  Field empty;
+
+  m_FT_phys    = empty;
+  m_FM_phys    = empty;
+  m_T_phys     = empty;
+  m_uv_phys    = empty;
+  m_ps_phys    = empty;
+  m_phis_phys  = empty;
+  m_omega_phys = empty;
+  m_dp_phys    = empty;
+  m_Q_phys     = empty;
+}
+
 } // namespace scream
