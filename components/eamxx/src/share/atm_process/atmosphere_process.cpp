@@ -70,6 +70,16 @@ void AtmosphereProcess::initialize (const TimeStamp& t0, const RunType run_type)
     start_timer (m_timer_prefix + this->name() + "::init");
   }
   m_time_stamp = t0;
+
+  // This method is called within`all_fields_set, which the AD calls.
+  // So usually m_pointers_set=true by now. However, in unit tests,
+  // and other atm procs where calling all_fields_set before initialize
+  // does not make a difference, we may just not call all_fields_set.
+  // Therefore, ensure it's called if by chance it hasn't already.
+  if (not m_all_fields_set) {
+    all_fields_set();
+  }
+
   initialize_impl(run_type);
 
   // Create all start-of-step fields needed for tendencies calculation
@@ -817,6 +827,8 @@ void AtmosphereProcess::set_fields_and_groups_pointers () {
     const auto& fid = f.get_header().get_identifier();
     m_internal_fields_pointers[fid.name()][fid.get_grid_name()] = &f;
   }
+
+  m_all_fields_set = true;
 }
 
 void AtmosphereProcess::

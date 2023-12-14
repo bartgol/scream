@@ -544,6 +544,7 @@ private:
   strmap_t<strmap_t<Field*>> m_fields_in_pointers;
   strmap_t<strmap_t<Field*>> m_fields_out_pointers;
   strmap_t<strmap_t<Field*>> m_internal_fields_pointers;
+  bool m_all_fields_set = false;
 
   // The list of in/out field/group requests.
   std::set<FieldRequest>   m_required_field_requests;
