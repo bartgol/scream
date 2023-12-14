@@ -1080,16 +1080,9 @@ void AtmosphereDriver::set_initial_conditions ()
     m_atm_params.sublist("provenance").set<std::string>("topography_file","NONE");
   }
 
-  bool has_const_vals  = ic_pl.isParameter("constant_fields_values");
-  bool has_const_names = ic_pl.isParameter("constant_fields_names");
-  EKAT_REQUIRE_MSG (has_const_names==has_const_vals,
-      "Error! Inconsistent specification in 'initial_conditions' list.\n"
-      " - 'constant_fields_names'  specified: " + std::to_string(has_const_names) + "\n"
-      " - 'constant_fields_values' specified: " + std::to_string(has_const_vals) + "\n");
-  if (has_const_names) {
-    const auto& names  = ic_pl.get<std::vector<std::string>>("constant_fields_names");
-    const auto& values = ic_pl.get<std::vector<double>>("constant_fields_values");
-    model_init->set_constant_fields(names,values,m_atm_logger);
+  if (ic_pl.isParameter("constant_fields")) {
+    using strvec_t = std::vector<std::string>;
+    model_init->set_constant_fields(ic_pl.get<strvec_t>("constant_fields"),m_atm_logger);
   }
 
   if (m_iop) {

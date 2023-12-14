@@ -52,8 +52,7 @@ public:
   virtual void read_topo_file (const std::string& filename,
                                const std::shared_ptr<ekat::logger::LoggerBase>& logger) = 0;
 
-  void set_constant_fields (const std::vector<std::string>& fnames,
-                            const std::vector<double>&      fvalues,
+  void set_constant_fields (const std::vector<std::string>& const_fields,
                             const std::shared_ptr<ekat::logger::LoggerBase>& logger);
 
 protected:

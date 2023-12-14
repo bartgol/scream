@@ -18,15 +18,9 @@ ModelInit (const std::vector<Field>& eamxx_inputs,
 }
 
 void ModelInit::
-set_constant_fields (const std::vector<std::string>& fnames,
-                     const std::vector<double>&      fvalues,
+set_constant_fields (const std::vector<std::string>& const_fields,
                      const std::shared_ptr<ekat::logger::LoggerBase>& logger)
 {
-  EKAT_REQUIRE_MSG (fnames.size()==fvalues.size(),
-      "Error! Inconsistent sizes for constant field initialization arrays.\n"
-      " - num fnames : " + std::to_string(fnames.size()) + "\n"
-      " - num fvalues: " + std::to_string(fvalues.size()) + "\n");
-
   logger->info("    [EAMxx] Initializing constant fields ...");
 
   // Helper lambda, to init all copies of a field (on all grids mgrs)
@@ -57,26 +51,49 @@ set_constant_fields (const std::vector<std::string>& fnames,
   };
 
   // Loop over provided fnames, and call the lambda above
-  for (size_t i=0; i<fnames.size(); ++i) {
-    logger->info("      " + fnames[i] + " = " + std::to_string(fvalues[i]));
-    auto pos = fnames[i].rfind("_cmp_");
+  for (const auto& s : const_fields) {
+    logger->info("      " + s);
+    auto tokens = ekat::split(s,"=");
+    EKAT_REQUIRE_MSG (tokens.size()==2,
+        "Error! Bad syntax specifying constant input fields.\n"
+        "  Valid syntax: 'field_name = field_value'\n"
+        "  Input string: '" + s + "'\n");
+    const auto fname   = ekat::trim(tokens[0]);
+    const auto val_str = ekat::trim(tokens[1]);
+    EKAT_REQUIRE_MSG (fname.size()>0,
+        "Error! Bad syntax specifying constant input fields (empty field name).\n"
+        " Input string: '" + s + "'\n");
+    EKAT_REQUIRE_MSG (val_str.size()>0,
+        "Error! Bad syntax specifying constant input fields (empty value).\n"
+        " Input string: '" + s + "'\n");
+    double val;
+    try {
+      val = std::stod (val_str);
+    } catch (std::exception&) {
+      EKAT_ERROR_MSG (
+        "Error! Bad value specification for constant field initialization.\n"
+        " Input string: '" + s + "'\n"
+        "Could not convert the string '" + val_str + "' to double.\n");
+    }
+
+    auto pos = fname.rfind("_cmp_");
     if (pos==std::string::npos) {
       // Not a component of a field
-      init_constant_field(fnames[i],fvalues[i]);
+      init_constant_field(fname,val);
     } else {
       // Looks like the component of a vector field.
-      auto tail = fnames[i].substr(pos+5);
+      auto tail = fname.substr(pos+5);
       EKAT_REQUIRE_MSG (tail.size()>0,
           "Error! Bad name specification for constant field initialization.\n"
-          " - input name: " + fnames[i] + "\n"
-          "The presence of '_cmp_' suggests this is a vector field, but no index was found after '_cmp'\n");
+          " - input name: " + fname + "\n"
+          "The presence of '_cmp_' suggests this is a vector field, but no index was found after '_cmp_'\n");
       try {
         int cmp = std::stoi (tail);
-        init_constant_field(fnames[i],fvalues[i],cmp);
+        init_constant_field(fname,val,cmp);
       } catch (std::exception&) {
         EKAT_ERROR_MSG (
           "Error! Bad name specification for constant field initialization.\n"
-          " - input name: " + fnames[i] + "\n"
+          " - input name: " + fname + "\n"
           "The presence of '_cmp_' suggests this is a vector field, but '" + tail + "' could not be parsed as an index\n");
       }
     }
