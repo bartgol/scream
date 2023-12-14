@@ -629,6 +629,13 @@ void AtmosphereDriver::create_fields()
   // Tell all atm procs that we are done setting fields from the FieldManager's
   m_atm_process_group->all_fields_set();
 
+  // Also, now that they have all fields, the atm procs should know how many
+  // temporaries they need, so we can initialize the atm memory buffer
+  m_memory_buffer = std::make_shared<ATMBufferManager>();
+  m_memory_buffer->request_bytes(m_atm_process_group->requested_buffer_size_in_bytes());
+  m_memory_buffer->allocate();
+  m_atm_process_group->init_buffers(*m_memory_buffer);
+
   // Now that all processes have all the required/computed fields/groups, they
   // have also created any possible internal field (if needed). Notice that some
   // atm proc might have created internal fields already during the set_grids
@@ -1312,12 +1319,6 @@ void AtmosphereDriver::initialize_atm_procs ()
   m_atm_logger->info("[EAMxx] initialize_atm_procs ...");
   start_timer("EAMxx::init");
   start_timer("EAMxx::initialize_atm_procs");
-
-  // Initialize memory buffer for all atm processes
-  m_memory_buffer = std::make_shared<ATMBufferManager>();
-  m_memory_buffer->request_bytes(m_atm_process_group->requested_buffer_size_in_bytes());
-  m_memory_buffer->allocate();
-  m_atm_process_group->init_buffers(*m_memory_buffer);
 
   const bool restarted_run = m_case_t0 < m_run_t0;
 
