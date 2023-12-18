@@ -24,8 +24,6 @@ initial_conditions:
   perturbation_limit: 0.001
   perturbation_minimum_pressure: 900.0 # in millibar
   constant_fields:
-    - surf_evap            = 0.0
-    - surf_sens_flux       = 0.0
     - precip_liq_surf_mass = 0.0
     - precip_ice_surf_mass = 0.0
     - surf_lw_flux_up      = 400.0
