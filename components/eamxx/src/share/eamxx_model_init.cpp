@@ -32,9 +32,13 @@ set_constant_fields (const std::vector<std::string>& const_fields,
         break;
       }
     }
+    auto get_fname = [&] (const Field& f) {
+      return f.name();
+    };
     EKAT_REQUIRE_MSG (f!=nullptr,
         "Error! Attempt to prescribe constant value for a field that is not an atm input.\n"
-        " - field name: " + name + "\n");
+        " - field name: " + name + "\n"
+        " - atm inputs: " + ekat::join(m_ic_fields,get_fname,",") + "\n");
 
     if (icmp>=0) {
       const auto& fl = f->get_header().get_identifier().get_layout();
@@ -87,15 +91,16 @@ set_constant_fields (const std::vector<std::string>& const_fields,
           "Error! Bad name specification for constant field initialization.\n"
           " - input name: " + fname + "\n"
           "The presence of '_cmp_' suggests this is a vector field, but no index was found after '_cmp_'\n");
+      int cmp;
       try {
-        int cmp = std::stoi (tail);
-        init_constant_field(fname,val,cmp);
+        cmp = std::stoi (tail);
       } catch (std::exception&) {
         EKAT_ERROR_MSG (
           "Error! Bad name specification for constant field initialization.\n"
           " - input name: " + fname + "\n"
           "The presence of '_cmp_' suggests this is a vector field, but '" + tail + "' could not be parsed as an index\n");
       }
+      init_constant_field(fname,val,cmp);
     }
   }
   logger->info("    [EAMxx] Initializing constant fields ... done!");
