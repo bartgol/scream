@@ -6,46 +6,61 @@ namespace scream
 {
 
 DefaultModelInit::
-DefaultModelInit (const std::vector<Field>& eamxx_inputs,
-                  const GridsManager& gm,
-                  const util::TimeStamp& t0)
- : ModelInit (eamxx_inputs,gm.get_grid("Physics"),t0)
+DefaultModelInit (const strmap_t<Field>& eamxx_inputs,
+                  const std::shared_ptr<const GridsManager>& gm,
+                  const ekat::ParameterList& ic_pl,
+                  const util::TimeStamp& run_t0)
+ : ModelInit (eamxx_inputs,gm,ic_pl,run_t0)
 {
   // Nothing to do here
 }
 
 void DefaultModelInit::
-read_ic_file (const std::string& filename,
-              const std::shared_ptr<ekat::logger::LoggerBase>& logger)
+set_initial_conditions (const std::shared_ptr<ekat::logger::LoggerBase>& logger)
 {
-  gather_ic_file_fields (filename);
-
-  if (m_ic_fields_in_file.size()==0) {
-    return;
+  set_constant_fields (logger);
+  if (m_params.isParameter("Filename")) {
+    read_ic_file (logger);
   }
-
-  // Load fields
-  AtmosphereInput ic_reader (filename,get_ic_grid(),m_ic_fields_in_file);
-  ic_reader.set_logger(logger);
-  ic_reader.read_variables();
-  ic_reader.finalize();
-
-  for (auto& f : m_ic_fields_in_file) {
-    f.get_header().get_tracking().update_time_stamp(m_t0);
+  if (m_params.isParameter("topography_filename")) {
+    read_topo_file (logger);
   }
 }
 
 void DefaultModelInit::
-read_topo_file (const std::string& filename,
-                const std::shared_ptr<ekat::logger::LoggerBase>& logger)
+read_ic_file (const std::shared_ptr<ekat::logger::LoggerBase>& logger)
+{
+  const auto& filename = m_params.get<std::string>("Filename");
+
+  auto grid = m_gm->get_grid("Physics");
+
+  // Load fields
+  std::vector<Field> ic_fields;
+  for (const auto& f : m_ic_fields) {
+    ic_fields.push_back(f);
+  }
+
+  AtmosphereInput ic_reader (filename,grid,ic_fields);
+  ic_reader.set_logger(logger);
+  ic_reader.read_variables();
+  ic_reader.finalize();
+
+  for (auto& f : ic_fields) {
+    f.get_header().get_tracking().update_time_stamp(m_run_t0);
+  }
+}
+
+void DefaultModelInit::
+read_topo_file (const std::shared_ptr<ekat::logger::LoggerBase>& logger)
 {
   using namespace ShortFieldTagsNames;
 
   std::vector<Field> fields;
-  auto grid = m_ic_grid->clone("Physics",true);
-  grid->reset_field_tag_name(COL,"ncol_d");
-  for (auto n : m_ic_grid->aliases()) {
-    grid->add_alias(n);
+  auto phys_grid = m_gm->get_grid("Physics");
+  auto ic_grid   = phys_grid->clone("Physics",true);
+  ic_grid->reset_field_tag_name(COL,"ncol_d");
+  for (auto n : phys_grid->aliases()) {
+    ic_grid->add_alias(n);
   }
 
   for (const auto& f : m_topo_fields) {
@@ -64,13 +79,14 @@ read_topo_file (const std::string& filename,
   }
 
   // Load fields
-  AtmosphereInput ic_reader (filename,grid,fields);
+  const auto& filename = m_params.get<std::string>("topography_filename");
+  AtmosphereInput ic_reader (filename,ic_grid,fields);
   ic_reader.set_logger(logger);
   ic_reader.read_variables();
   ic_reader.finalize();
 
   for (auto& f : fields) {
-    f.get_header().get_tracking().update_time_stamp(m_t0);
+    f.get_header().get_tracking().update_time_stamp(m_run_t0);
   }
 }
 

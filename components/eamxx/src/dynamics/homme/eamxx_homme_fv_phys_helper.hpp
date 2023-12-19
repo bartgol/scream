@@ -42,7 +42,7 @@ public:
 
   bool fv_phys_active = false;
   int  pgN            = -1;
-private:
+
   // Copy physics T,uv state to FT,M to form tendencies in next dynamics step.
   static void copy_prev (const int ncols, const int nlevs,
                          const view_ND<PackT,2>& T,  const view_ND<PackT,3>& uv,

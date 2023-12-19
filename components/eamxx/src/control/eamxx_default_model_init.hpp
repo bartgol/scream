@@ -6,36 +6,33 @@
 namespace scream
 {
 
-// Interface class for initializing fields at model init time
-// Derived classes can implement whatever strategy is needed
-// For instance, they could simply look for them in the IC file
-// An alternative (which is the case for PG2) is to read a version
-// of the fields on a different grid, and then remap to the actual
-// fields that were requested
-
+// Concrete implementation of ModelInit where we simply read in
+// the eamxx input fields from input file, using the 'Physics'
+// grid from the grids manager.
 class DefaultModelInit : public ModelInit {
 public:
-  DefaultModelInit (const std::vector<Field>& eamxx_inputs,
-                    const GridsManager& gm,
-                    const util::TimeStamp& t0);
+
+  DefaultModelInit (const strmap_t<Field>& eamxx_inputs,
+                    const std::shared_ptr<const GridsManager>& gm,
+                    const ekat::ParameterList& ic_pl,
+                    const util::TimeStamp& run_t0);
 
   ~DefaultModelInit () = default;
 
+  void set_initial_conditions (const std::shared_ptr<ekat::logger::LoggerBase>& logger);
+
 protected:
-
-  void read_ic_file (const std::string& filename,
-                     const std::shared_ptr<ekat::logger::LoggerBase>& logger) override;
-
-  void read_topo_file (const std::string& filename,
-                       const std::shared_ptr<ekat::logger::LoggerBase>& logger) override;
+  void read_ic_file (const std::shared_ptr<ekat::logger::LoggerBase>& logger) override;
+  void read_topo_file (const std::shared_ptr<ekat::logger::LoggerBase>& logger) override;
 };
 
 inline std::shared_ptr<ModelInit>
-create_default_model_init (const std::vector<Field>& eamxx_inputs,
-                           const GridsManager& gm,
-                           const util::TimeStamp& t0)
+create_default_model_init (const std::map<std::string,Field>& eamxx_inputs,
+                           const std::shared_ptr<const GridsManager>& gm,
+                           const ekat::ParameterList& params,
+                           const util::TimeStamp& run_t0)
 {
-  return std::make_shared<DefaultModelInit>(eamxx_inputs,gm,t0);
+  return std::make_shared<DefaultModelInit>(eamxx_inputs,gm,params,run_t0);
 }
 
 inline void register_default_model_init () {

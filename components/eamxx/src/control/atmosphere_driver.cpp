@@ -999,13 +999,13 @@ void AtmosphereDriver::set_initial_conditions ()
   // Note: we cannot simply grab m_atm_process_group->get_fields_in(),
   // since the fields would be read-only. We must get them from their
   // field manager, so that they are writable.
-  std::vector<Field> eamxx_inputs;
+  std::map<std::string,Field> eamxx_inputs;
 
   auto add_field = [&] (const Field& f) {
     const auto& fid = f.get_header().get_identifier();
     const auto& gname = fid.get_grid_name();
     const auto& fm = get_field_mgr(gname);
-    eamxx_inputs.push_back(fm->get_field(fid.name()));
+    eamxx_inputs[fid.name()] = fm->get_field(fid.name());
   };
 
   for (const auto& f : m_atm_process_group->get_fields_in()) {
@@ -1025,74 +1025,98 @@ void AtmosphereDriver::set_initial_conditions ()
   // so we can safely register it here.
   register_default_model_init();
 
+  // Shorter to type
+  auto iop = m_intensive_observation_period;
+
   auto& ic_pl = m_atm_params.sublist("initial_conditions");
+  ic_pl.set("iop",iop); // Only used by "iop" ModelInit
+
   // Note: in order for this to work, you MUST have registered
   //       the "fvphys" ModelInit in the factory.
   //       Currently, this is done in register_dynamics
-  std::string init_type = fvphyshack ? "fvphys" : "default";
+  std::string init_type = iop!=nullptr ? "iop" : 
+                                         (fvphyshack ? "fvphys" : "default");
   auto& init_factory = ModelInitFactory::instance();
-  auto model_init = init_factory.create(init_type,eamxx_inputs,*m_grids_manager,m_current_ts);
+  auto model_init = init_factory.create(init_type,eamxx_inputs,m_grids_manager,ic_pl,m_current_ts);
 
-  // Start with constant fields
-  using strvec_t = std::vector<std::string>;
-  if (ic_pl.isParameter("constant_fields")) {
-    model_init->set_constant_fields(ic_pl.get<strvec_t>("constant_fields"),m_atm_logger);
-  }
+  model_init->set_initial_conditions(m_atm_logger);
+  // // Start with constant fields
+  // using strvec_t = std::vector<std::string>;
+  // if (ic_pl.isParameter("constant_fields")) {
+  //   model_init->set_constant_fields(ic_pl.get<strvec_t>("constant_fields"),m_atm_logger);
+  // }
 
-  // Shorter to type
-  auto iop = m_intensive_observation_period;
-  if (ic_pl.isParameter("Filename")) {
-    const auto& filename = ic_pl.get<std::string>("Filename");
-    m_atm_logger->info("    [EAMxx] Reading initial conditions file ...");
-    m_atm_logger->info("        filename: " + filename);
+  // if (ic_pl.isParameter("Filename")) {
+  //   const auto& filename = ic_pl.get<std::string>("Filename");
+  //   m_atm_logger->info("    [EAMxx] Reading initial conditions file ...");
+  //   m_atm_logger->info("        filename: " + filename);
 
-    if (iop) {
-      // For IOP, we load from file and copy data from the closest
-      // lat/lon column to every other column
-      auto fnames = model_init->get_ic_fields_in_file_names ();
-      auto fm = get_field_mgr(model_init->get_ic_grid()->name());
-      iop->setup_io_info(filename, model_init->get_ic_grid());
-      iop->read_fields_from_file_for_iop(filename, fnames, m_current_ts, fm);
-    } else {
-      model_init->read_ic_file (filename,m_atm_logger);
-    }
-    m_atm_logger->info("    [EAMxx] Reading initial conditions file ... done!");
-  }
+  //   if (iop) {
+  //     // For IOP, we load from file and copy data from the closest
+  //     // lat/lon column to every other column
+  //     auto fnames = model_init->get_ic_fields_in_file_names ();
+  //     auto fm = get_field_mgr(model_init->get_ic_grid()->name());
+  //     iop->setup_io_info(filename, model_init->get_ic_grid());
+  //     iop->read_fields_from_file_for_iop(filename, fnames, m_current_ts, fm);
+  //   } else {
+  //     model_init->read_ic_file (filename,m_atm_logger);
+  //   }
+  //   m_atm_logger->info("    [EAMxx] Reading initial conditions file ... done!");
+  // }
 
-  if (ic_pl.isParameter("topography_filename")) {
-    const auto& filename = ic_pl.get<std::string>("topography_filename");
-    m_atm_logger->info("    [EAMxx] Reading topography file ...");
-    m_atm_logger->info("        filename: " + filename);
-    m_atm_params.sublist("provenance").set("topography_file",filename);
-    if (iop) {
-      // For IOP, we load from file and copy data from the closest
-      // lat/lon column to every other column
+  // if (ic_pl.isParameter("topography_filename")) {
+  //   const auto& filename = ic_pl.get<std::string>("topography_filename");
+  //   m_atm_logger->info("    [EAMxx] Reading topography file ...");
+  //   m_atm_logger->info("        filename: " + filename);
+  //   m_atm_params.sublist("provenance").set("topography_file",filename);
+  //   if (iop) {
+  //     // For IOP, we load from file and copy data from the closest
+  //     // lat/lon column to every other column
 
-      auto topo_fnames_file  = model_init->get_topo_fields_names_file();
-      auto topo_fnames_eamxx = model_init->get_topo_fields_names_eamxx();
-      for (const auto& it : topo_fnames_file) {
-        const auto& gname = it.first;
-        auto fm = get_field_mgr(gname);
-        iop->setup_io_info(filename, m_grids_manager->get_grid(gname));
-        iop->read_fields_from_file_for_iop(filename,
-                                           topo_fnames_file[gname],
-                                           topo_fnames_eamxx[gname],
-                                           m_current_ts,
-                                           fm);
-      }
-    } else {
-      model_init->read_topo_file(filename,m_atm_logger);
-    }
-    m_atm_logger->debug("    [EAMxx] Processing topography from file ... done!");
-  } else {
-    // Ensure that, if no topography_filename is given, no
-    // processes is asking for topography data (assuming a
-    // separate IC param entry isn't given for the field).
-    EKAT_REQUIRE_MSG(model_init->get_topo_fields_names_eamxx().size()==0,
-        "Error! Topography data was requested in the FM,\n"
-        "       but no topography_filename was given in IC parameter list.\n");
-    m_atm_params.sublist("provenance").set<std::string>("topography_file","NONE");
-  }
+  //     auto topo_fnames_file  = model_init->get_topo_fields_names_file();
+  //     auto topo_fnames_eamxx = model_init->get_topo_fields_names_eamxx();
+  //     for (const auto& it : topo_fnames_file) {
+  //       const auto& gname = it.first;
+  //       auto fm = get_field_mgr(gname);
+  //       iop->setup_io_info(filename, m_grids_manager->get_grid(gname));
+  //       iop->read_fields_from_file_for_iop(filename,
+  //                                          topo_fnames_file[gname],
+  //                                          topo_fnames_eamxx[gname],
+  //                                          m_current_ts,
+  //                                          fm);
+  //     }
+  //     // First, split topo fields by grid
+  //     // auto topo_fields = model_init->get_topo_fields();
+  //     // strmap_t<strvec_t> eamxx_names, names_in_file;
+  //     // for (size_t i=0; i<topo_fields.size(); ++i) {
+  //     //   const auto& f = topo_fields[i];
+  //     //   auto gname = f.get_header().get_identifier().get_grid_name();
+  //     //   eamxx_names[gname].push_back(f.name());
+  //     //   names_in_file[gname].push_back(topo_fnames_file[i]);
+  //     // }
+  //     // for (const auto& it : eamxx_names) {
+  //     //   const auto& gname = it.first;
+  //     //   auto fm = get_field_mgr(gname);
+  //     //   iop->setup_io_info(filename, m_grids_manager->get_grid(gname));
+  //     //   iop->read_fields_from_file_for_iop(filename,
+  //     //                                      names_in_file[gname],
+  //     //                                      eamxx_names[gname],
+  //     //                                      m_current_ts,
+  //     //                                      fm);
+  //     // }
+  //   } else {
+  //     model_init->read_topo_file(filename,m_atm_logger);
+  //   }
+  //   m_atm_logger->debug("    [EAMxx] Processing topography from file ... done!");
+  // } else {
+  //   // Ensure that, if no topography_filename is given, no
+  //   // processes is asking for topography data (assuming a
+  //   // separate IC param entry isn't given for the field).
+  //   EKAT_REQUIRE_MSG(model_init->get_topo_fields_names_eamxx().size()==0,
+  //       "Error! Topography data was requested in the FM,\n"
+  //       "       but no topography_filename was given in IC parameter list.\n");
+  //   m_atm_params.sublist("provenance").set<std::string>("topography_file","NONE");
+  // }
 
   if (ic_pl.isParameter("constant_fields")) {
     using strvec_t = std::vector<std::string>;

@@ -23,77 +23,66 @@ namespace scream
 
 class ModelInit {
 public:
+  using strvec_t = std::vector<std::string>;
   template<typename T>
   using strmap_t = std::map<std::string,T>;
 
-  using strvec_t = std::vector<std::string>;
-
-  ModelInit (const std::vector<Field>& eamxx_inputs,
-             const std::shared_ptr<const AbstractGrid>& ic_grid,
-             const util::TimeStamp& t0);
+  ModelInit (const strmap_t<Field>& eamxx_inputs,
+             const std::shared_ptr<const GridsManager>& gm,
+             const ekat::ParameterList& ic_pl,
+             const util::TimeStamp& run_t0);
 
   virtual ~ModelInit () = default;
 
-  std::shared_ptr<const AbstractGrid> get_ic_grid () const { return m_ic_grid; }
-
-  const strmap_t<strvec_t>& get_topo_fields_names_file () const {
-    return m_topo_fields_names_file;
-  }
-  const strmap_t<strvec_t>& get_topo_fields_names_eamxx () const {
-    return m_topo_fields_names_eamxx;
-  }
-  const strvec_t& get_ic_fields_in_file_names () const {
-    return m_ic_fields_in_file_names;
-  }
-
-  virtual void read_ic_file (const std::string& filename,
-                             const std::shared_ptr<ekat::logger::LoggerBase>& logger) = 0;
-
-  virtual void read_topo_file (const std::string& filename,
-                               const std::shared_ptr<ekat::logger::LoggerBase>& logger) = 0;
-
-  void set_constant_fields (const std::vector<std::string>& const_fields,
-                            const std::shared_ptr<ekat::logger::LoggerBase>& logger);
+  // Note: if all derived classes simply call set_constant_field->read_ic_file->read_topo_file,
+  //       you may want to put that impl in the base class
+  virtual void set_initial_conditions (const std::shared_ptr<ekat::logger::LoggerBase>& logger) = 0;
 
 protected:
 
   // Separate inputs into topo fields and IC fields
-  void separate_inputs (const std::vector<Field>& eamxx_inputs);
+  void separate_inputs ();
 
-  // Gather fields that are actually in IC file
-  void gather_ic_file_fields (const std::string& filename);
+  void set_constant_fields (const std::shared_ptr<ekat::logger::LoggerBase>& logger);
+  virtual void read_ic_file (const std::shared_ptr<ekat::logger::LoggerBase>& logger) = 0;
+  virtual void read_topo_file (const std::shared_ptr<ekat::logger::LoggerBase>& logger) = 0;
 
-  // Gather fields that are topography related
-  void gather_topo_fields_names ();
+  // ------------------------ Attributes ------------------------ //
 
-  util::TimeStamp     m_t0;
+  // Parameters
+  ekat::ParameterList   m_params;
 
-  strmap_t<strvec_t>  m_topo_fields_names_file;
-  strmap_t<strvec_t>  m_topo_fields_names_eamxx;
-  strvec_t            m_ic_fields_in_file_names;
+  // Grids manager
+  std::shared_ptr<const GridsManager> m_gm;
 
-  // Subset of EAMxx input fields, containing fields that are topography-related
-  std::vector<Field>  m_topo_fields;
+  // Run start date/time
+  util::TimeStamp     m_run_t0;
 
-  // Subset of EAMxx input fields, containing fields that are not topography-related
-  std::vector<Field>  m_ic_fields;
+  // Map name->field for all eamxx input fields (passed at construction time)
+  strmap_t<Field>   m_eamxx_inputs;
 
-  // Subset of m_ic_fields, containing fields that are present in the IC file
-  std::vector<Field>  m_ic_fields_in_file;
+  // Subset of EAMxx input fields that are const-inited
+  std::set<Field>   m_const_fields;
 
-  // When init-ing a field to a constant, move it to this vector
-  std::vector<Field>  m_constant_fields;
+  // Subset of EAMxx input fields that are topography-related
+  // NOTE: when set_constant_fields is called, we remove const fields from these lists
+  strvec_t          m_topo_fields_names;
+  std::set<Field>   m_topo_fields;
 
-  // Grid where IC conditions will be read
-  std::shared_ptr<const AbstractGrid> m_ic_grid;
+  // Subset of EAMxx input fields that are not topography-related
+  // NOTE: when set_constant_fields is called, we remove const fields from these lists
+  strvec_t          m_ic_fields_names;
+  std::set<Field>   m_ic_fields;
 };
 
+// The driver will use this factory to agnostically build the concrete model init
 using ModelInitFactory =
     ekat::Factory<ModelInit,
                   ekat::CaseInsensitiveString,
                   std::shared_ptr<ModelInit>,
-                  const std::vector<Field>&,
-                  const GridsManager&,
+                  const std::map<std::string,Field>&,
+                  const std::shared_ptr<const GridsManager>&,
+                  const ekat::ParameterList&,
                   const util::TimeStamp&>;
 
 } // namespace scream
