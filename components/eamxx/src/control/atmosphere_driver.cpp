@@ -1033,6 +1033,12 @@ void AtmosphereDriver::set_initial_conditions ()
   auto& init_factory = ModelInitFactory::instance();
   auto model_init = init_factory.create(init_type,eamxx_inputs,*m_grids_manager,m_current_ts);
 
+  // Start with constant fields
+  using strvec_t = std::vector<std::string>;
+  if (ic_pl.isParameter("constant_fields")) {
+    model_init->set_constant_fields(ic_pl.get<strvec_t>("constant_fields"),m_atm_logger);
+  }
+
   // Shorter to type
   auto iop = m_intensive_observation_period;
   if (ic_pl.isParameter("Filename")) {
@@ -1061,6 +1067,7 @@ void AtmosphereDriver::set_initial_conditions ()
     if (iop) {
       // For IOP, we load from file and copy data from the closest
       // lat/lon column to every other column
+
       auto topo_fnames_file  = model_init->get_topo_fields_names_file();
       auto topo_fnames_eamxx = model_init->get_topo_fields_names_eamxx();
       for (const auto& it : topo_fnames_file) {

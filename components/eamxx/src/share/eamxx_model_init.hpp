@@ -81,6 +81,9 @@ protected:
   // Subset of m_ic_fields, containing fields that are present in the IC file
   std::vector<Field>  m_ic_fields_in_file;
 
+  // When init-ing a field to a constant, move it to this vector
+  std::vector<Field>  m_constant_fields;
+
   // Grid where IC conditions will be read
   std::shared_ptr<const AbstractGrid> m_ic_grid;
 };

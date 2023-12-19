@@ -20,6 +20,10 @@ read_ic_file (const std::string& filename,
 {
   gather_ic_file_fields (filename);
 
+  if (m_ic_fields_in_file.size()==0) {
+    return;
+  }
+
   // Load fields
   AtmosphereInput ic_reader (filename,get_ic_grid(),m_ic_fields_in_file);
   ic_reader.set_logger(logger);

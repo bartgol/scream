@@ -103,6 +103,13 @@ set_constant_fields (const std::vector<std::string>& const_fields,
     
     f->get_header().get_tracking().update_time_stamp(m_t0);
 
+    // Remove this field from the list of ic_fields and topo_fields
+    for (auto it = m_ic_fields.begin(); it!=m_ic_fields.end(); ++it) {
+      if (it->name()==fname) {
+        m_constant_fields.push_back(*it);
+        m_ic_fields.erase(it);
+        break;
+      }
     }
     for (auto& it : m_topo_fields_names_eamxx) {
       if (ekat::contains(it.second,fname)) {
@@ -111,6 +118,7 @@ set_constant_fields (const std::vector<std::string>& const_fields,
         it.second.erase(it2);
         auto& file_names = m_topo_fields_names_file[it.first];
         file_names.erase(file_names.begin()+pos);
+        m_constant_fields.push_back(m_topo_fields.begin()+pos);
         m_topo_fields.erase(m_topo_fields.begin()+pos);
       }
     }
@@ -160,6 +168,10 @@ separate_inputs (const std::vector<Field>& eamxx_inputs)
 void ModelInit::
 gather_ic_file_fields (const std::string& filename)
 {
+  if (m_ic_fields.empty()) {
+    return;
+  }
+
   using namespace ShortFieldTagsNames;
 
   auto grid = get_ic_grid();
