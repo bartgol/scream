@@ -23,44 +23,29 @@ set_constant_fields (const std::vector<std::string>& const_fields,
 {
   logger->info("    [EAMxx] Initializing constant fields ...");
 
-  // Helper lambda, to init all copies of a field (on all grids mgrs)
-  auto init_constant_field = [&] (const std::string& name, double val, int icmp = -1) {
-    Field* f = nullptr;
-    for (auto& it : m_ic_fields) {
-      if (it.name()==name) {
-        f = &it;
-        break;
-      }
+  auto str2double = [&] (const std::string& fname, const std::string& val_str) {
+    double val;
+    try {
+      val = std::stod (val_str);
+    } catch (std::exception&) {
+      EKAT_ERROR_MSG (
+        "Error! Bad value specification for constant field initialization.\n"
+        " Field name: " + fname + "\n"
+        "Could not convert the string '" + val_str + "' to double.\n");
     }
-    auto get_fname = [&] (const Field& f) {
-      return f.name();
-    };
-    EKAT_REQUIRE_MSG (f!=nullptr,
-        "Error! Attempt to prescribe constant value for a field that is not an atm input.\n"
-        " - field name: " + name + "\n"
-        " - atm inputs: " + ekat::join(m_ic_fields,get_fname,",") + "\n");
-
-    if (icmp>=0) {
-      const auto& fl = f->get_header().get_identifier().get_layout();
-      EKAT_REQUIRE_MSG (fl.is_vector_layout(),
-          "Error! Attempt to access vector component of a non-vector field.\n"
-          "  - field name: " + name + "\n"
-          "  - field layout: " + to_string(fl) + "\n"
-          "  - requested comp: " + std::to_string(icmp) + "\n");
-      f->get_component(icmp).deep_copy(val);
-    } else {
-      f->deep_copy(val);
-    }
-    f->get_header().get_tracking().update_time_stamp(m_t0);
+    return val;
   };
+
 
   // Loop over provided fnames, and call the lambda above
   for (const auto& s : const_fields) {
     logger->info("      " + s);
+
+    // Split input string FNAME = VALUE(S)
     auto tokens = ekat::split(s,"=");
     EKAT_REQUIRE_MSG (tokens.size()==2,
         "Error! Bad syntax specifying constant input fields.\n"
-        "  Valid syntax: 'field_name = field_value'\n"
+        "  Valid syntax: 'field_name = field_value(s)'\n"
         "  Input string: '" + s + "'\n");
     const auto fname   = ekat::trim(tokens[0]);
     const auto val_str = ekat::trim(tokens[1]);
@@ -70,37 +55,64 @@ set_constant_fields (const std::vector<std::string>& const_fields,
     EKAT_REQUIRE_MSG (val_str.size()>0,
         "Error! Bad syntax specifying constant input fields (empty value).\n"
         " Input string: '" + s + "'\n");
-    double val;
-    try {
-      val = std::stod (val_str);
-    } catch (std::exception&) {
-      EKAT_ERROR_MSG (
-        "Error! Bad value specification for constant field initialization.\n"
-        " Input string: '" + s + "'\n"
-        "Could not convert the string '" + val_str + "' to double.\n");
-    }
 
-    auto pos = fname.rfind("_cmp_");
-    if (pos==std::string::npos) {
-      // Not a component of a field
-      init_constant_field(fname,val);
-    } else {
-      // Looks like the component of a vector field.
-      auto tail = fname.substr(pos+5);
-      EKAT_REQUIRE_MSG (tail.size()>0,
-          "Error! Bad name specification for constant field initialization.\n"
-          " - input name: " + fname + "\n"
-          "The presence of '_cmp_' suggests this is a vector field, but no index was found after '_cmp_'\n");
-      int cmp;
-      try {
-        cmp = std::stoi (tail);
-      } catch (std::exception&) {
-        EKAT_ERROR_MSG (
-          "Error! Bad name specification for constant field initialization.\n"
-          " - input name: " + fname + "\n"
-          "The presence of '_cmp_' suggests this is a vector field, but '" + tail + "' could not be parsed as an index\n");
+    // Get the field, and ensure it's in the ic fields list
+    Field* f = nullptr;
+    for (auto& it : m_ic_fields) {
+      if (it.name()==fname) {
+        f = &it;
+        break;
       }
-      init_constant_field(fname,val,cmp);
+    }
+    auto get_fname = [&] (const Field& f) {
+      return f.name();
+    };
+    EKAT_REQUIRE_MSG (f!=nullptr,
+        "Error! Attempt to prescribe constant value for a field that is not an atm input.\n"
+        " - field name: " + fname + "\n"
+        " - atm inputs: " + ekat::join(m_ic_fields,get_fname,",") + "\n");
+
+    // Check if we are attempting to init a vec field with f=(v1,v2,...,vN) syntax
+    bool vector_values = val_str.front()=='(' and val_str.back()==')';
+    if (vector_values) {
+      const auto& fl = f->get_header().get_identifier().get_layout();
+      EKAT_REQUIRE_MSG (fl.is_vector_layout(),
+          "Error! Attempt to assing a vector of values to a non-vector field.\n"
+          "  - field name: " + fname + "\n"
+          "  - field layout: " + to_string(fl) + "\n"
+          "  - input string: " + s + "\n");
+      const auto vals = ekat::split(val_str.substr(1,val_str.size()-2),",");
+      const int vec_dim = fl.get_vector_dim();
+      EKAT_REQUIRE_MSG (static_cast<int>(vals.size())==fl.dim(vec_dim),
+          "Error! Vector of values does not match vector field extent.\n"
+          "  - field name: " + fname + "\n"
+          "  - field layout: " + to_string(fl) + "\n"
+          "  - input string: " + s + "\n");
+      for (int icmp=0; icmp<fl.dim(vec_dim); ++icmp) {
+        auto f_comp = f->subfield(vec_dim,icmp);
+        auto val = str2double(fname,vals[icmp]);
+        f_comp.deep_copy(val);
+      }
+    } else {
+      // Not a vector assignment, so just init the whole field
+      // NOTE: if user had a typo, like "f=(v1,v2", notice missing ')',
+      //       this fcn will throw, cause "(v1,v2" cannot be converted to double
+      auto val = str2double(fname,val_str);
+      f->deep_copy(val);
+    }
+    
+    f->get_header().get_tracking().update_time_stamp(m_t0);
+
+    }
+    for (auto& it : m_topo_fields_names_eamxx) {
+      if (ekat::contains(it.second,fname)) {
+        auto it2  = ekat::find(it.second,fname);
+        auto pos = std::distance(it.second.begin(),it2);
+        it.second.erase(it2);
+        auto& file_names = m_topo_fields_names_file[it.first];
+        file_names.erase(file_names.begin()+pos);
+        m_topo_fields.erase(m_topo_fields.begin()+pos);
+      }
     }
   }
   logger->info("    [EAMxx] Initializing constant fields ... done!");

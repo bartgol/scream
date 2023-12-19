@@ -7,8 +7,7 @@ initial_conditions:
   Filename: should_not_be_neeeded_and_code_will_throw_if_it_tries_to_open_this_nonexistent_file.nc
   constant_fields:
     - A = 1
-    - V_cmp_0 = 2
-    - V_cmp_1 = 2
+    - V = (2,3)
     - Z = 1.0
 
 atmosphere_processes:
