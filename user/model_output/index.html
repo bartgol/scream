@@ -16,18 +16,18 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.3.1">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
     
     
       
-        <title>Model output - The C++ E3SM Atmosphere Model (EAMxx)</title>
+        <title>Model output - EAMxx</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e359304.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -66,9 +66,6 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
-    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -91,7 +88,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="The C++ E3SM Atmosphere Model (EAMxx)" class="md-header__button md-logo" aria-label="The C++ E3SM Atmosphere Model (EAMxx)" data-md-component="logo">
+    <a href="../.." title="EAMxx" class="md-header__button md-logo" aria-label="EAMxx" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -105,7 +102,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            The C++ E3SM Atmosphere Model (EAMxx)
+            EAMxx
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -124,9 +121,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
       </label>
     
@@ -134,15 +131,18 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
       </label>
     
   
 </form>
       
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -188,7 +188,7 @@
         <a href="https://github.com/E3SM-Project/scream" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -221,20 +221,20 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="The C++ E3SM Atmosphere Model (EAMxx)" class="md-nav__button md-logo" aria-label="The C++ E3SM Atmosphere Model (EAMxx)" data-md-component="logo">
+    <a href="../.." title="EAMxx" class="md-nav__button md-logo" aria-label="EAMxx" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
 
     </a>
-    The C++ E3SM Atmosphere Model (EAMxx)
+    EAMxx
   </label>
   
     <div class="md-nav__source">
       <a href="https://github.com/E3SM-Project/scream" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -246,6 +246,7 @@
     
       
       
+  
   
   
   
@@ -270,20 +271,24 @@
     
   
   
+  
     
     
     
       
+        
+        
+      
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        
-        
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -303,6 +308,7 @@
             
               
                 
+  
   
   
   
@@ -326,6 +332,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../common/installation/" class="md-nav__link">
         
@@ -348,6 +355,7 @@
     
   
   
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
@@ -355,6 +363,17 @@
       
         
       
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Model output
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -366,6 +385,76 @@
 
       </a>
       
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-output-yaml-file-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic output YAML file syntax
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagnostic-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagnostic output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remapped-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remapped output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-output-stream-to-a-cime-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add output stream to a CIME case
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Add output stream to a CIME case">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#important-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Important notes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -373,6 +462,7 @@
             
               
                 
+  
   
   
   
@@ -396,12 +486,34 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../common/eamxx_params/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Runtime parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coarse_nudging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coarse nudging
   </span>
   
 
@@ -423,20 +535,24 @@
   
   
   
+  
     
     
     
       
+        
+        
+      
+    
     
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        
-        
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -456,6 +572,7 @@
             
               
                 
+  
   
   
   
@@ -479,6 +596,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../common/installation/" class="md-nav__link">
         
@@ -496,6 +614,7 @@
             
               
                 
+  
   
   
   
@@ -519,6 +638,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../developer/kokkos_ekat/" class="md-nav__link">
         
@@ -536,6 +656,7 @@
             
               
                 
+  
   
   
   
@@ -559,17 +680,20 @@
   
   
   
+  
     
+    
+    
+      
     
     
     <li class="md-nav__item md-nav__item--nested">
       
         
         
-        
-        
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
         
+          
           <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
             
   
@@ -593,6 +717,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../developer/field/" class="md-nav__link">
         
@@ -610,6 +735,7 @@
             
               
                 
+  
   
   
   
@@ -633,6 +759,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../developer/processes/" class="md-nav__link">
         
@@ -650,6 +777,7 @@
             
               
                 
+  
   
   
   
@@ -681,6 +809,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../developer/io/" class="md-nav__link">
         
@@ -701,17 +830,20 @@
   
   
   
+  
     
+    
+    
+      
     
     
     <li class="md-nav__item md-nav__item--nested">
       
         
         
-        
-        
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
         
+          
           <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
             
   
@@ -735,6 +867,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../developer/standalone_testing/" class="md-nav__link">
         
@@ -755,6 +888,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../developer/cime_testing/" class="md-nav__link">
         
@@ -772,6 +906,7 @@
             
               
                 
+  
   
   
   
@@ -805,6 +940,95 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Technical Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Technical Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical/aerocom_cldtop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AeroCOM cloud top
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical/clean_clear_sky/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Extra radiation calls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -825,6 +1049,65 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-output-yaml-file-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic output YAML file syntax
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagnostic-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagnostic output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remapped-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remapped output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-output-stream-to-a-cime-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add output stream to a CIME case
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Add output stream to a CIME case">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#important-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Important notes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -839,92 +1122,111 @@
 
 
 <h1 id="model-output">Model output</h1>
-<p>EAMxx allows to configure the desired model output via <a href="https://yaml.org/">YAML</a> files,
+<p>EAMxx allows the user to configure the desired model output via <a href="https://yaml.org/">YAML</a> files,
 with each YAML file associated to a different output file.</p>
-<h1 id="basic-output-yaml-file-syntax">Basic output YAML file syntax</h1>
+<h2 id="basic-output-yaml-file-syntax">Basic output YAML file syntax</h2>
 <p>The following is an example of a simple output request.</p>
-<p><div class="highlight"><pre><span></span><code>%YAML 1.1
----
-filename_prefix: my_output
-Averaging Type: Average
-Max Snapshots Per File: 10
-Fields:
-  Physics:
-    Field Names:
-      - T_mid
-      - qv
-  Dynamics:
-    Field Names:
-      - dp3d_dyn
-      - omega_dyn
-output_control:
-  Frequency: 6
-  frequency_units: nhours
-...
+<div class="highlight"><pre><span></span><code><span class="nt">%YAML</span><span class="w"> </span><span class="m">1.1</span>
+<span class="nn">---</span>
+<span class="nt">filename_prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_output</span>
+<span class="nt">Averaging Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Average</span>
+<span class="nt">Max Snapshots Per File</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="nt">Fields</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">Physics</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">Field Names</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">T_mid</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">qv</span>
+<span class="w">  </span><span class="nt">Dynamics</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">Field Names</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dp3d_dyn</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">omega_dyn</span>
+<span class="nt">output_control</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">Frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span>
+<span class="w">  </span><span class="nt">frequency_units</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nhours</span>
 </code></pre></div>
-Notice that lists can be equivalently specified in YAML as <code>Field Names: [f1, f2, f3]</code>.
-The user can specify fields to be outputed from any of the grids used in the simulation.
-In the exampole above, we requested fields from both the Physics and Dynamics grid.
-The other parameters are
-- <code>Averaging Type</code>: how the fields are integrated in time before being saved. Valid
-  options are
-  - Instant: no integration, each time frame saved corresponds to instantaneous values
-    of the fields
-  - Average/Max/Min: the fields undergo the corresponding operation over the time
-    interval specified in the <code>output_control</code> section. In the case above, each snapshot
-    saved to file corresponds to an average of the output fields over 6h windows.
-- <code>filename_prefix</code>: the prefix of the output file, which will be created in the run
+<p>Notice that lists can be equivalently specified in YAML as <code>Field Names: [f1, f2, f3]</code>.
+The user can specify fields to be outputted from any of the grids used in the simulation.
+In the example above, we requested fields from both the Physics and Dynamics grid.
+The other parameters are</p>
+<ul>
+<li>
+<p><code>Averaging Type</code>: how the fields are integrated in time before being saved. Valid
+  options are</p>
+<ul>
+<li>Instant: no integration, each time frame saved corresponds to instantaneous values
+  of the fields</li>
+<li>Average/Max/Min: the fields undergo the corresponding operation over the time
+  interval specified in the <code>output_control</code> section. In the case above, each snapshot
+  saved to file corresponds to an average of the output fields over 6h windows.</li>
+</ul>
+</li>
+<li>
+<p><code>filename_prefix</code>: the prefix of the output file, which will be created in the run
   directory. The full filename will be <code>$prefix.$avgtype.$frequnits_x$freq.$timestamp.nc</code>,
   where $timestamp corresponds to the first snapshot saved in the file for Instant output,
-  or the beginning of the first averaging window for the other averaging types
-- <code>Max Snapshots Per File</code>: specifies how many time snapshots can be put in a file. Once
-  this number is reached, EAMxx will close the file and open a new one.
-- <code>Frequency</code>: how many units of time are between two consecutive writes to file. For
+  or the beginning of the first averaging window for the other averaging types</p>
+</li>
+<li><code>Max Snapshots Per File</code>: specifies how many time snapshots can be put in a file. Once
+  this number is reached, EAMxx will close the file and open a new one.</li>
+<li><code>Frequency</code>: how many units of time are between two consecutive writes to file. For
   Instant output the fields are "sampled" at this frequency, while for other averaging
-  types the fields are "integrated" in time over this window
-- <code>frequency_units</code>: units of the output frequency. Valid options are <code>nsteps</code> (the
+  types the fields are "integrated" in time over this window</li>
+<li><code>frequency_units</code>: units of the output frequency. Valid options are <code>nsteps</code> (the
   number of atmosphere time steps), <code>nsecs</code>, <code>nmins</code>, <code>nhours</code>, <code>ndays</code>, <code>nmonths</code>,
-  <code>nyears</code>.</p>
-<h1 id="diagnostic-output">Diagnostic output</h1>
+  <code>nyears</code>.</li>
+</ul>
+<h2 id="diagnostic-output">Diagnostic output</h2>
 <p>In addition to the fields computed by EAMxx as part of the timestep, the user can
 request to output derived quantities, which will be computed on the fly by the
-I/O interface of EAMxx. There are two types of diagnostic outputs:
-- quantities computed as a function of EAMxx fields. These are simply physical quantities
+I/O interface of EAMxx. There are two types of diagnostic outputs:</p>
+<ul>
+<li>
+<p>quantities computed as a function of EAMxx fields. These are simply physical quantities
   that EAMxx does not keep in persistent storage. As of August 2023, the available
-  derived quantities are (case sensitive):
-  - PotentialTemperature
-  - AtmosphereDensity
-  - Exner
-  - VirtualTemperature
-  - z_int
-  - z_mid
-  - geopotential_int
-  - geopotential_mid
-  - dz
-  - DryStaticEnergy
-  - SeaLevelPressure
-  - LiqWaterPath
-  - IceWaterPath
-  - VapWaterPath
-  - RainWaterPath
-  - RimeWaterPath
-  - ShortwaveCloudForcing
-  - LongwaveCloudForcing
-  - RelativeHumidity
-  - ZonalVapFlux
-  - MeridionalVapFlux
-  - precip_surf_mass_flux
-  - surface_upward_latent_heat_flux
-- lower-dimensional slices of a field. These are hyperslices of an existing field or of
+  derived quantities are (case sensitive):</p>
+<ul>
+<li><code>PotentialTemperature</code></li>
+<li><code>AtmosphereDensity</code></li>
+<li><code>Exner</code></li>
+<li><code>VirtualTemperature</code></li>
+<li><code>z_int</code></li>
+<li><code>z_mid</code></li>
+<li><code>geopotential_int</code></li>
+<li><code>geopotential_mid</code></li>
+<li><code>dz</code></li>
+<li><code>DryStaticEnergy</code></li>
+<li><code>SeaLevelPressure</code></li>
+<li><code>LiqWaterPath</code></li>
+<li><code>IceWaterPath</code></li>
+<li><code>VapWaterPath</code></li>
+<li><code>RainWaterPath</code></li>
+<li><code>RimeWaterPath</code></li>
+<li><code>ShortwaveCloudForcing</code></li>
+<li><code>LongwaveCloudForcing</code></li>
+<li><code>RelativeHumidity</code></li>
+<li><code>ZonalVapFlux</code></li>
+<li><code>MeridionalVapFlux</code></li>
+<li><code>precip_liq_surf_mass_flux</code></li>
+<li><code>precip_ice_surf_mass_flux</code></li>
+<li><code>precip_total_surf_mass_flux</code></li>
+<li><code>surface_upward_latent_heat_flux</code></li>
+</ul>
+</li>
+<li>
+<p>lower-dimensional slices of a field. These are hyperslices of an existing field or of
   another diagnostic output. As of August 2023, given a field X, the available options
-  are:
-  - X_at_lev_N: subviews the field X at the N-th vertical level index. Recall that
-    in EAMxx N=0 corresponds to the model top.
-  - X_at_model_bot, X_at_model_top: special case for top and bottom of the model.
-  - X_at_Ymb, X_at_YPa, X_at_YhPa: interpolates the field X at a vertical position
-    specified by the give pressure Y. Available units are mb (millibar), Pa, and hPa.
-  - X_at_Ym: interpolates the field X at a vertical height of Y meters.</p>
-<h1 id="output-remap">Output remap</h1>
+  are:</p>
+<ul>
+<li><code>X_at_lev_N</code>: slice the field <code>X</code> at the N-th vertical level index. Recall that
+  in EAMxx N=0 corresponds to the model top.</li>
+<li><code>X_at_model_bot</code>, <code>X_at_model_top</code>: special case for top and bottom of the model.</li>
+<li><code>X_at_Ymb</code>, <code>X_at_YPa</code>, <code>X_at_YhPa</code>: interpolates the field <code>X</code> at a vertical position
+  specified by the give pressure <code>Y</code>. Available units are <code>mb</code> (millibar), <code>Pa</code>, and <code>hPa</code>.</li>
+<li><code>X_at_Ym</code>: interpolates the field <code>X</code> at a vertical height of <code>Y</code> meters.</li>
+</ul>
+</li>
+</ul>
+<h2 id="remapped-output">Remapped output</h2>
 <p>The following options can be used to to save fields on a different grid from the one
 they are computed on.</p>
 <ul>
@@ -942,28 +1244,37 @@ they are computed on.</p>
   where <code>ngp</code> is the number of Gauss points along each axis in the 2d spectral element.
   Note: this feature cannot be used along with the horizontal/vertical remapper.</li>
 </ul>
-<h1 id="add-output-stream-to-a-cime-case">Add output stream to a CIME case</h1>
+<h2 id="add-output-stream-to-a-cime-case">Add output stream to a CIME case</h2>
 <p>In order to tell EAMxx that a new output stream is needed, one must add the name of
 the yaml file to be used to the list of yaml files that EAMxx will process. From the
-case folder, after <code>case.setup</code> has run, one can do
-<div class="highlight"><pre><span></span><code>$ ./atmchange output_yaml_files=/path/to/my/yaml/file
+case folder, after <code>case.setup</code> has run, one can do</p>
+<div class="highlight"><pre><span></span><code>./atmchange<span class="w"> </span><span class="nv">output_yaml_files</span><span class="o">=</span>/path/to/my/yaml/file
 </code></pre></div>
-to specify a single yaml file, or
-<div class="highlight"><pre><span></span><code>$ ./atmchange output_yaml_files+=/path/to/my/yaml/file
+<p>to specify a single yaml file, or</p>
+<div class="highlight"><pre><span></span><code>./atmchange<span class="w"> </span><span class="nv">output_yaml_files</span><span class="o">+=</span>/path/to/my/yaml/file
 </code></pre></div>
-to append to the list of yaml files.
-Important notes:
-- The user should not specify a path to a file in <code>$RUNDIR/data</code>. EAMxx will
+<p>to append to the list of yaml files.</p>
+<h3 id="important-notes">Important notes</h3>
+<ul>
+<li>The user should not specify a path to a file in <code>$RUNDIR/data</code>. EAMxx will
 put a copy of the specified yaml files in that directory, pruning any existing copy
 of that file. This happens every time that <code>buildnml</code> runs; in particular, it happens
-during <code>case.submit</code>.
-- As a consequence of the above, the user should not modify the generated yaml files
+during <code>case.submit</code>.</li>
+<li>As a consequence of the above, the user should not modify the generated yaml files
   that are in <code>$RUNDIR/data</code>, since any modification will be lost on the next run
   of <code>buildnml</code>. To modify output parmeters, the user should modify the yaml file
-  that was specified with the <code>atmchange</code> command.
-- EAMxx will parse the yaml file and expand any string of the form $VAR, by looking
+  that was specified with the <code>atmchange</code> command.</li>
+<li>EAMxx will parse the yaml file and expand any string of the form $VAR, by looking
   for the value of the variable VAR in the CIME case. If VAR is not a valid CIME
-  variable, an error will be raised.</p>
+  variable, an error will be raised.</li>
+</ul>
+
+
+
+
+
+
+
 
 
 
@@ -974,13 +1285,14 @@ during <code>case.submit</code>.
             </div>
           
           
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
           <button type="button" class="md-top md-icon" data-md-component="top" hidden>
-            
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
-            Back to top
-          </button>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
         
       </main>
       
@@ -1007,10 +1319,11 @@ during <code>case.submit</code>.
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indices", "navigation.instant", "navigation.sections", "navigation.top"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indices", "navigation.instant", "navigation.sections", "navigation.top"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c8d2eff1.min.js"></script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
